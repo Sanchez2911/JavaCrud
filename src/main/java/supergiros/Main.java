@@ -1,6 +1,5 @@
 package supergiros;
 
-import supergiros.controller.ctlUsuario;
 import supergiros.view.verUsuarios;
 
 public class Main {

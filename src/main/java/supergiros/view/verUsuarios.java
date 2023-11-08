@@ -73,10 +73,7 @@ public class verUsuarios {
                 String apellido = JOptionPane.showInputDialog("Apellido:");
                 String edad = JOptionPane.showInputDialog("Edad:");
                 controller.crearUsuario(nombre, apellido, Integer.parseInt(edad));
-                int filas = tblUsuarios.getRowCount();
-                for (int i = filas - 1; i >= 0; i--) {
-                    mdlTabla.removeRow(i);
-                }
+                removerFilas();
                 llenarTabla();
             }
         });
@@ -100,10 +97,7 @@ public class verUsuarios {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.eliminarUsuario(consultarId().getId());
-                int filas = tblUsuarios.getRowCount();
-                for (int i = filas - 1; i >= 0; i--) {
-                    mdlTabla.removeRow(i);
-                }
+                removerFilas();
                 llenarTabla();
             }
         });
@@ -112,10 +106,7 @@ public class verUsuarios {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.modificarUsuario(consultarId().getId(), txtNombre.getText(), txtApellido.getText(), Integer.parseInt(txtEdad.getText()));
-                int filas = tblUsuarios.getRowCount();
-                for (int i = filas - 1; i >= 0; i--) {
-                    mdlTabla.removeRow(i);
-                }
+                removerFilas();
                 llenarTabla();
             }
         });
@@ -129,12 +120,19 @@ public class verUsuarios {
         }
     }
 
-    //Metodo que extrae la informacion de la Jtable del usuario y la compara en la BD para traer ID.
+    //Metodo que extrae la informacion de la Jtable para traer el ID correcto.
     public mdlUsuario consultarId(){
         String nombre = (String) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0);
         String apellido = (String) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1);
         Integer edad= (Integer) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 2);
         mdlUsuario usuario = controller.consultaId(nombre, apellido, edad);
         return usuario;
+    }
+    //Metodo que elimina las filas de la Jtable (se usa para actualizar)
+    public void removerFilas(){
+        int filas = tblUsuarios.getRowCount();
+        for (int i = filas - 1; i >= 0; i--) {
+            mdlTabla.removeRow(i);
+        }
     }
 }
